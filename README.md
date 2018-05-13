@@ -1,6 +1,6 @@
 # To-Readable-Time
 
-Lightweight tool for calculating time in days, hours and minutes basing on the single input value.
+Lightweight tool for calculating time in days, hours and minutes basing on the single input value. [SEE DEMO](https://prztrz.github.io/To-Readable-Time/)
 
 `toReadableTime(value, unit)` accepts two params:
 
