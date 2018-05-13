@@ -9,7 +9,29 @@
 </head>
 
 <body>
-
+    <div>input unit:
+        <label>
+            <input type="radio" name="unit" value="hours"> hours
+        </label>
+        <label>
+            <input type="radio" name="unit" value="minutes" checked> minutes
+        </label>
+        <label>
+            <input type="radio" name="unit" value="seconds"> seconds
+        </label>
+    </div>
+    <div>Set number of
+        <span id="unitSpan">minutes</span>:
+        <input type="number" id="input">
+    </div>
+    <div>
+        <p>
+            <strong id="days"></strong> days</p>
+        <p>
+            <strong id="hours"></strong> hours</p>
+        <p>
+            <strong id="minutes"></strong> minutes</p>
+    </div>
     <script src="./js/toReadableTime.js"></script>
 </body>
 
