@@ -45,7 +45,8 @@ const getTime = (value, unit = 'minute', options = {}) => {
 const getComputedTime = (time, options) => {
   const { hideMinutes, hideDays, hideHours } = options;
   const days = Number(!hideDays) * time.days;
-  const hours = (time.hours + 24 * Number(!!hideDays)) * Number(!hideHours);
+  const hours =
+    (time.hours + 24 * time.days * Number(!!hideDays)) * Number(!hideHours);
   const minutes =
     (time.minutes +
       60 *
