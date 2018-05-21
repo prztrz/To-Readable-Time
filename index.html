@@ -11,13 +11,22 @@
 <body>
     <div>input unit:
         <label>
-            <input type="radio" name="unit" value="hours"> hours
+            <input type="radio" name="unit" value="hour"> hours
         </label>
         <label>
-            <input type="radio" name="unit" value="minutes" checked> minutes
+            <input type="radio" name="unit" value="minute" checked> minutes
         </label>
         <label>
-            <input type="radio" name="unit" value="seconds"> seconds
+            <input type="radio" name="unit" value="second"> seconds
+        </label>
+        <label>
+            <input type="checkbox" value="hideDays" name="daysToggle"> hide Days
+        </label>
+        <label>
+            <input type="checkbox" value="hideHours" name="hoursToggle"> hide hours
+        </label>
+        <label>
+            <input type="checkbox" value="hideMinutes" name="minutesToggle"> hide minutes
         </label>
     </div>
     <div>Set number of
@@ -25,11 +34,11 @@
         <input type="number" id="input">
     </div>
     <div>
-        <p>
+        <p id="daysToggle">
             <strong id="days"></strong> days</p>
-        <p>
+        <p id="hoursToggle">
             <strong id="hours"></strong> hours</p>
-        <p>
+        <p id="minutesToggle">
             <strong id="minutes"></strong> minutes</p>
     </div>
     <script src="./js/toReadableTime.js"></script>
