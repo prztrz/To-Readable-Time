@@ -1,62 +1,47 @@
-const expectedUnits = ['days', 'hours', 'minutes'];
+const toSecondsMultipliers = {
+  hour: 60 * 60,
+  minute: 60,
+  second: 1
+};
 
-const multipliers = {
-  days: 24 * 60,
-  hours: 60,
-  minutes: 1
+const fromSecondMultipliers = {
+  day: 24 * 60 * 60,
+  hour: 60 * 60,
+  minute: 60
 };
 
 /**
- *
- * @param {'days' | 'hours' | 'minutes'} expectedUnit
- */
-const getDividers = expectedUnit => ({
-  hour: 1 / 60 * multipliers[expectedUnit],
-  minute: 1 * multipliers[expectedUnit],
-  second: 60 * multipliers[expectedUnit]
-});
-
-/**
- *
+ * @function toReadableTime
  * @param {number} value
  * @param {'hour' | 'minute' | 'second'} unit
- * @param {Object} options
+ * @param {{hiddenUnits: 'day' | 'minute' | 'hour'[]}} options
+ * @return {{days: number, hours: number, minutes: number}}
  */
-const getTime = (value, unit = 'minute', options = {}) => {
-  const result = {};
-  const { hideMinutes, hideDays, hideHours } = options;
+const toReadableTime = (value, unit = 'minute', options) => {
+  const seconds = value * toSecondsMultipliers[unit];
 
-  expectedUnits.forEach(expectedUnit => {
-    const divider = getDividers(expectedUnit)[unit];
-    result[expectedUnit] = Math.floor(value / divider);
-    value %= divider;
-  });
+  const { hiddenUnits } = options;
+  const hiddenUnitsArray = Array.isArray(hiddenUnits)
+    ? hiddenUnits
+    : [hiddenUnits];
 
-  return !hideMinutes && !hideDays && !hideHours
-    ? result
-    : getComputedTime(result, options);
+  return (function getValues(value, depth = 0, result = {}) {
+    const unit = Object.keys(fromSecondMultipliers)[depth];
+
+    if (!unit) return result;
+
+    if (hiddenUnitsArray.includes(unit)) {
+      return getValues(value, ++depth, result);
+    } else {
+      result[`${unit}s`] = Math.floor(value / fromSecondMultipliers[unit]);
+      getValues(value % fromSecondMultipliers[unit], ++depth, result);
+    }
+
+    return result;
+  })(seconds);
 };
 
-/**
- *
- * @param {Object} time
- * @param {Object} options
- */
-const getComputedTime = (time, options) => {
-  const { hideMinutes, hideDays, hideHours } = options;
-  const days = Number(!hideDays) * time.days;
-  const hours =
-    (time.hours + 24 * time.days * Number(!!hideDays)) * Number(!hideHours);
-  const minutes =
-    (time.minutes +
-      60 *
-        (time.hours + 24 * time.days * Number(!!hideDays)) *
-        Number(!!hideHours)) *
-    Number(!hideMinutes);
-  return { days, hours, minutes };
-};
-
-// The actual scripts are above everything down there is for the demo purposes
+// The actual script is above everything down there is for the demo purposes
 const setUnitSpan = value => {
   document.getElementById('unitSpan').innerHTML = value;
 };
@@ -73,15 +58,11 @@ const handleChangeRadio = () => {
   );
 };
 
-const getOptions = () => {
-  const result = {};
-  Array.from(
+const getOptions = () => ({
+  hiddenUnits: Array.from(
     document.querySelectorAll('input[type="checkbox"]:checked')
-  ).forEach(checkbox => {
-    Object.assign(result, { [checkbox.value]: true });
-  });
-  return result;
-};
+  ).map(({ value }) => value)
+});
 
 const handleChangeCheckbox = () => {
   Array.from(document.querySelectorAll('input[type="checkbox"]')).forEach(
@@ -107,7 +88,7 @@ const handleChangeInput = e => {
 
 const setTimeValues = value => {
   const unit = document.querySelector('input[type="radio"]:checked').value;
-  const { days, hours, minutes } = getTime(value, unit, getOptions());
+  const { days, hours, minutes } = toReadableTime(value, unit, getOptions());
   document.getElementById('days').innerText = days;
   document.getElementById('hours').innerText = hours;
   document.getElementById('minutes').innerText = minutes;

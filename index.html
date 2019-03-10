@@ -1,47 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>To Readable Time</title>
-</head>
+  </head>
 
-<body>
-    <div>input unit:
-        <label>
-            <input type="radio" name="unit" value="hour"> hours
-        </label>
-        <label>
-            <input type="radio" name="unit" value="minute" checked> minutes
-        </label>
-        <label>
-            <input type="radio" name="unit" value="second"> seconds
-        </label>
-        <label>
-            <input type="checkbox" value="hideDays" name="daysToggle"> hide Days
-        </label>
-        <label>
-            <input type="checkbox" value="hideHours" name="hoursToggle"> hide hours
-        </label>
-        <label>
-            <input type="checkbox" value="hideMinutes" name="minutesToggle"> hide minutes
-        </label>
-    </div>
-    <div>Set number of
-        <span id="unitSpan">minutes</span>:
-        <input type="number" id="input">
+  <body>
+    <div>
+      input unit:
+      <label> <input type="radio" name="unit" value="hour" /> hours </label>
+      <label>
+        <input type="radio" name="unit" value="minute" checked /> minutes
+      </label>
+      <label> <input type="radio" name="unit" value="second" /> seconds </label>
+      <label>
+        <input type="checkbox" value="day" name="daysToggle" /> hide Days
+      </label>
+      <label>
+        <input type="checkbox" value="hour" name="hoursToggle" /> hide hours
+      </label>
+      <label>
+        <input type="checkbox" value="minute" name="minutesToggle" /> hide
+        minutes
+      </label>
     </div>
     <div>
-        <p id="daysToggle">
-            <strong id="days"></strong> days</p>
-        <p id="hoursToggle">
-            <strong id="hours"></strong> hours</p>
-        <p id="minutesToggle">
-            <strong id="minutes"></strong> minutes</p>
+      Set number of <span id="unitSpan">minutes</span>:
+      <input type="number" id="input" />
+    </div>
+    <div>
+      <p id="daysToggle"><strong id="days"></strong> days</p>
+      <p id="hoursToggle"><strong id="hours"></strong> hours</p>
+      <p id="minutesToggle"><strong id="minutes"></strong> minutes</p>
     </div>
     <script src="./js/toReadableTime.js"></script>
-</body>
-
+  </body>
 </html>
