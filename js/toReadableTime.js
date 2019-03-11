@@ -1,13 +1,8 @@
-const toSecondsMultipliers = {
+const multipliers = {
+  day: 24 * 60 * 60,
   hour: 60 * 60,
   minute: 60,
   second: 1
-};
-
-const fromSecondMultipliers = {
-  day: 24 * 60 * 60,
-  hour: 60 * 60,
-  minute: 60
 };
 
 /**
@@ -18,7 +13,7 @@ const fromSecondMultipliers = {
  * @return {{days: number, hours: number, minutes: number}}
  */
 const toReadableTime = (value, unit = 'minute', options) => {
-  const seconds = value * toSecondsMultipliers[unit];
+  const seconds = value * multipliers[unit];
 
   const { hiddenUnits } = options;
   const hiddenUnitsArray = Array.isArray(hiddenUnits)
@@ -26,15 +21,15 @@ const toReadableTime = (value, unit = 'minute', options) => {
     : [hiddenUnits];
 
   return (function getValues(value, depth = 0, result = {}) {
-    const unit = Object.keys(fromSecondMultipliers)[depth];
+    const unit = Object.keys(multipliers)[depth];
 
     if (!unit) return result;
 
     if (hiddenUnitsArray.includes(unit)) {
       return getValues(value, ++depth, result);
     } else {
-      result[`${unit}s`] = Math.floor(value / fromSecondMultipliers[unit]);
-      getValues(value % fromSecondMultipliers[unit], ++depth, result);
+      result[`${unit}s`] = Math.floor(value / multipliers[unit]);
+      getValues(value % multipliers[unit], ++depth, result);
     }
 
     return result;
